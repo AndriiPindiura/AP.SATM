@@ -1,0 +1,1 @@
+makecert.exe -iv aydnepRootCA.pvk -n "CN=Mykhailo Shackyi" -ic aydnepRootCA.cer mshackyi.cer -sr localmachine -ss My -pe -b 05/25/2014 -e 06/25/2014

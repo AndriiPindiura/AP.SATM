@@ -1,0 +1,6 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT owner, entry, direction, startDate, endDate ,pk
+  FROM Events ev
+  where not exists (select pk from EventImages img where ev.pk=img.pk)
+  order by owner
+  /*order by ev.startDate*/

@@ -1,0 +1,7 @@
+INSERT [satm].[dbo].[PROTOCOL](objtype,objid,action,date,owner,pk,processed)
+select objtype,objid,action,date,owner,pk,'false' from OPENROWSET
+('SQLOLEDB','Server={@SQLServer};UID={@username};PWD={@password}','SELECT [objtype]
+      ,[objid],[action],[date],[owner],[pk]
+  FROM [{@Database}].[dbo].[PROTOCOL] WHERE OBJTYPE=''GRAY''
+  order by date desc') rdb
+  where NOT EXISTS (select owner,pk FROM [satm].[dbo].[PROTOCOL] ldb where (rdb.pk=ldb.pk) and (rdb.owner=ldb.owner))

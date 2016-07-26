@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AP.SATM.Heart" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AP.SATM.Heart" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfEntries">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Entries" nillable="true" type="tns:Entries" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEntries" nillable="true" type="tns:ArrayOfEntries" />
+  <xs:complexType name="Entries">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="core" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="entryDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Entries" nillable="true" type="tns:Entries" />
+  <xs:complexType name="ArrayOfEvents">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Events" nillable="true" type="tns:Events" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEvents" nillable="true" type="tns:ArrayOfEvents" />
+  <xs:complexType name="Events">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="carID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="culture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="direction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="enterCam" type="xs:int" />
+      <xs:element minOccurs="0" name="enterTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="entry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="exitCam" type="xs:int" />
+      <xs:element minOccurs="0" name="exitTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="legal" type="xs:boolean" />
+      <xs:element minOccurs="0" name="owner" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ttn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="uid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="upCam" type="xs:int" />
+      <xs:element minOccurs="0" name="upTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="user" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="who" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Events" nillable="true" type="tns:Events" />
+  <xs:complexType name="ArrayOfCores">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Cores" nillable="true" type="tns:Cores" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCores" nillable="true" type="tns:ArrayOfCores" />
+  <xs:complexType name="Cores">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cores" nillable="true" type="tns:Cores" />
+</xs:schema>

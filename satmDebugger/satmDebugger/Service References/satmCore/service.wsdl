@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="satmCore" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_satmICore_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:SslTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                </msf:SslTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp>
+            </sp:IncludeTimestamp>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:BootstrapPolicy>
+                  <wsp:Policy>
+                    <sp:SignedParts>
+                      <sp:Body>
+                      </sp:Body>
+                      <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                      <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing">
+                      </sp:Header>
+                    </sp:SignedParts>
+                    <sp:EncryptedParts>
+                      <sp:Body>
+                      </sp:Body>
+                    </sp:EncryptedParts>
+                    <sp:TransportBinding>
+                      <wsp:Policy>
+                        <sp:TransportToken>
+                          <wsp:Policy>
+                            <msf:SslTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                            </msf:SslTransportSecurity>
+                          </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                          <wsp:Policy>
+                            <sp:Basic256>
+                            </sp:Basic256>
+                          </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                          <wsp:Policy>
+                            <sp:Strict>
+                            </sp:Strict>
+                          </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp>
+                        </sp:IncludeTimestamp>
+                      </wsp:Policy>
+                    </sp:TransportBinding>
+                    <sp:EndorsingSupportingTokens>
+                      <wsp:Policy>
+                        <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                          <wsp:Policy>
+                            <sp:RequireThumbprintReference>
+                            </sp:RequireThumbprintReference>
+                            <sp:WssX509V3Token10>
+                            </sp:WssX509V3Token10>
+                          </wsp:Policy>
+                        </sp:X509Token>
+                        <sp:SignedParts>
+                          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing">
+                          </sp:Header>
+                        </sp:SignedParts>
+                      </wsp:Policy>
+                    </sp:EndorsingSupportingTokens>
+                    <sp:Wss11>
+                      <wsp:Policy>
+                        <sp:MustSupportRefThumbprint>
+                        </sp:MustSupportRefThumbprint>
+                      </wsp:Policy>
+                    </sp:Wss11>
+                    <sp:Trust10>
+                      <wsp:Policy>
+                        <sp:MustSupportIssuedTokens>
+                        </sp:MustSupportIssuedTokens>
+                        <sp:RequireClientEntropy>
+                        </sp:RequireClientEntropy>
+                        <sp:RequireServerEntropy>
+                        </sp:RequireServerEntropy>
+                      </wsp:Policy>
+                    </sp:Trust10>
+                  </wsp:Policy>
+                </sp:BootstrapPolicy>
+              </wsp:Policy>
+            </sp:SecureConversationToken>
+          </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+          </wsp:Policy>
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens>
+            </sp:MustSupportIssuedTokens>
+            <sp:RequireClientEntropy>
+            </sp:RequireClientEntropy>
+            <sp:RequireServerEntropy>
+            </sp:RequireServerEntropy>
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/satm" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="satmICore_SignIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignIn" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_SignIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignInResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_SignOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignOut" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_SignOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_ARM_InputMessage">
+    <wsdl:part name="parameters" element="tns:ARM" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_ARM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ARMResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEvents" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetEntries_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntries" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetEntries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetCores_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCores" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_GetCores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_UpdateEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEvent" />
+  </wsdl:message>
+  <wsdl:message name="satmICore_UpdateEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEventResponse" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="true" name="satmICore">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SignIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/SignIn" message="tns:satmICore_SignIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/SignInResponse" message="tns:satmICore_SignIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="true" name="SignOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/SignOut" message="tns:satmICore_SignOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/SignOutResponse" message="tns:satmICore_SignOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ARM">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/ARM" message="tns:satmICore_ARM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/ARMResponse" message="tns:satmICore_ARM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="GetEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/GetEvents" message="tns:satmICore_GetEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/GetEventsResponse" message="tns:satmICore_GetEvents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="GetEntries">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/GetEntries" message="tns:satmICore_GetEntries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/GetEntriesResponse" message="tns:satmICore_GetEntries_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="GetCores">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/GetCores" message="tns:satmICore_GetCores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/GetCoresResponse" message="tns:satmICore_GetCores_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="UpdateEvent">
+      <wsdl:input wsaw:Action="http://tempuri.org/satmICore/UpdateEvent" message="tns:satmICore_UpdateEvent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/satmICore/UpdateEventResponse" message="tns:satmICore_UpdateEvent_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_satmICore" type="tns:satmICore">
+    <wsp:PolicyReference URI="#NetTcpBinding_satmICore_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SignIn">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/SignIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/SignOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ARM">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/ARM" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/GetEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEntries">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/GetEntries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCores">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/GetCores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEvent">
+      <soap12:operation soapAction="http://tempuri.org/satmICore/UpdateEvent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="satmCore">
+    <wsdl:port name="NetTcpBinding_satmICore" binding="tns:NetTcpBinding_satmICore">
+      <soap12:address location="net.tcp://crusader:8086/SATM/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://crusader:8086/SATM/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>satmCore</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

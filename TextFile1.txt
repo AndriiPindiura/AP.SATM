@@ -1,0 +1,60 @@
+<configuration>
+  <configSections>
+  </configSections>
+  <connectionStrings />
+  <system.serviceModel>
+    <services>
+      <service name="satm.satmCore" behaviorConfiguration="satmBehavior">
+        <host>
+          <baseAddresses>
+            <add baseAddress="net.tcp://*:8086/SATM/"/>
+          </baseAddresses>
+        </host>
+        <endpoint address=""
+                  binding="netTcpBinding"
+                  bindingConfiguration="satmBinding"
+                  contract="satm.satmICore" />
+        <endpoint address="mex"
+                  binding="mexHttpBinding"
+                  contract="IMetadataExchange" />
+        <endpoint address="" binding="wsDualHttpBinding" contract="satm.satmICore" bindingConfiguration="" />
+      </service>
+    </services>
+    <bindings>
+      <wsDualHttpBinding>
+        
+      </wsDualHttpBinding>
+      <netTcpBinding>
+        <binding name="satmBinding">
+          <security mode="TransportWithMessageCredential">
+            <message clientCredentialType="Certificate"/>
+            <!--<message clientCredentialType="Certificate"/>-->
+          </security>
+        </binding>
+      </netTcpBinding>
+    </bindings>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior name="satmBehavior">
+          <serviceDebug includeExceptionDetailInFaults="True" />
+          <serviceAuthorization serviceAuthorizationManagerType="satm.satmAuth, satm" />
+          <serviceMetadata/>
+          <!--<serviceCredentials>
+            <serviceCertificate findValue="CN=satmCore" />
+              <clientCertificate>
+                <authentication certificateValidationMode="ChainTrust" revocationMode="NoCheck"/>
+              </clientCertificate>
+          </serviceCredentials>-->
+          <!--<serviceCredentials>
+            <userNameAuthentication userNamePasswordValidationMode="Custom" customUserNamePasswordValidatorType="satm.satmAuth, satm"/>
+            <serviceCertificate findValue="CN=satmCoreSrv" />
+              <clientCertificate>
+                <authentication certificateValidationMode="PeerTrust" revocationMode="NoCheck"/>
+              </clientCertificate>
+          </serviceCredentials>-->
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+  </system.serviceModel>
+
+</configuration>

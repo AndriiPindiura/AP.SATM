@@ -1,0 +1,6 @@
+INSERT [satm].[dbo].[satm1C] (owner,[1cID],carID,Date,Entry,Culture,WHO,pk)
+select * from OPENROWSET
+('SQLOLEDB','Server={@SQLServer};UID={@username};PWD={@password}','SELECT *
+  FROM [{@Database}].[dbo].[PROTOCOL1C]') rdb
+  where NOT EXISTS (select owner,pk FROM [satm].[dbo].[satm1C] ldb where 
+  (rdb.owner=ldb.owner) and  (rdb.pk=ldb.pk) ) 

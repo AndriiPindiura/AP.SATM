@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AP.SATM.Eyes.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="x509" Type="System.String" Scope="User">
+      <Value Profile="(Default)">83 0d 66 76 8a b9 a0 93 47 71 b7 5e 5c 80 f3 32</Value>
+    </Setting>
+    <Setting Name="illegalColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">IndianRed</Value>
+    </Setting>
+    <Setting Name="legalColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">PaleGreen</Value>
+    </Setting>
+    <Setting Name="processedColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Aquamarine</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

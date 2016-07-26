@@ -1,0 +1,26 @@
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[satm1C](
+	[owner] [nvarchar](50) NOT NULL DEFAULT 'VS-KRE',
+	[ID] [nvarchar](50) NOT NULL,
+	[TruckID] [nvarchar](50) NULL,
+	[Date] [datetime] NOT NULL DEFAULT (getdate()),
+	[Entry] [int] NULL,
+	[Culture] [nvarchar](50) NULL,
+	[WHO] [nvarchar](50) NULL,
+	[pk] [uniqueidentifier] NOT NULL DEFAULT (newid())
+) ON [PRIMARY]
+
+GO
+
+INSERT INTO [dbo].[satm1C] ([ID],[TruckID],[Date],[Entry],[Culture],[WHO])
+SELECT [ID],[TruckID],[Date],[Entry],[Culture],[WHO]
+FROM [dbo].PROTOCOL1C
+
+DROP TABLE [dbo].[PROTOCOL1C]
+
+exec sp_rename 'satm1C','PROTOCOL1C'

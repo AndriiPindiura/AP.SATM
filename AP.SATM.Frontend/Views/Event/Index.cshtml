@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model AP.SATM.Frontend.Models.LayoutModel
+// ViewBag.Title = "Home Page";
+}
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript" ></script>
+    <!--<script language="text/javascript">
+    $(window).load(function(){
+            @Model.ocxWidth = $(window).width();
+            @Model.ocxHeight = $(window).height();
+        alert(@Model.ocxWidth + "x" + @Model.ocxHeight);
+    });
+
+    </script>-->
+    <script>
+        function OnLoad()
+        {
+            //alert($(window).width() + "x" + $(window).height());
+            document.getElementById('upOCX').width = $(window).innerWidth() / 2 - 5;
+            document.getElementById('upOCX').height = $(window).innerHeight() / 2 - 13;
+            document.getElementById('enterOCX').width = $(window).innerWidth() / 2 - 5;
+            document.getElementById('enterOCX').height = $(window).innerHeight() / 2 - 11;
+            document.getElementById('exitOCX').width = $(window).innerWidth() / 2 - 5;
+            document.getElementById('exitOCX').height = $(window).innerHeight() / 2 - 13;
+        }
+    </script>
+</head>
+<body onload="OnLoad()" onresize="OnLoad()">
+    
+
+    <!--Events Window: (@Model.ocxWidth x @Model.ocxHeight)<br />-->
+    <table>
+        <tr>
+            <td>
+                <script>
+                    document.write($(window).innerWidth() + "x" + $(window).innerHeight());
+                </script>
+            </td>
+            <td>
+                <object classid="clsid:3A41B075-E368-4F94-9E59-5F26DC102BF4" id="upOCX" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <object classid="clsid:3A41B075-E368-4F94-9E59-5F26DC102BF4" id="enterOCX" />
+            </td>
+            <td>
+                <object classid="clsid:3A41B075-E368-4F94-9E59-5F26DC102BF4" id="exitOCX" />
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

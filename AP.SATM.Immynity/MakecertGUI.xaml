@@ -1,0 +1,19 @@
+﻿<Window x:Class="AP.SATM.Immynity.MakecertGUI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Makecert GUI" Height="234.597" Width="358.881" Icon="ap2.png" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid>
+        <TextBox Name="caCN" HorizontalAlignment="Left" Height="25" Margin="106,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" TextChanged="caCN_TextChanged" MouseDoubleClick="caCN_MouseDoubleClick" />
+        <Label Content="CA:" HorizontalAlignment="Left" Margin="32,22,0,0" VerticalAlignment="Top"/>
+        <Button Name="caBtn" Content="NewCA" HorizontalAlignment="Left" Margin="257,22,0,0" VerticalAlignment="Top" Width="56" Height="26" IsEnabled="False" Click="caBtn_Click"/>
+        <Label Content="Certificate:" HorizontalAlignment="Left" Margin="32,53,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="certCN" HorizontalAlignment="Left" Height="26" Margin="106,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" TextChanged="certCN_TextChanged"/>
+        <Button Name="certBtn" Content="Generate" HorizontalAlignment="Left" Margin="257,115,0,0" VerticalAlignment="Top" Width="56" Height="26" IsEnabled="False" Click="certBtn_Click"/>
+        <DatePicker Name="dateFrom" HorizontalAlignment="Left" Margin="106,84,0,0" VerticalAlignment="Top" Width="146" Height="26"/>
+        <Label Content="Begin:" HorizontalAlignment="Left" Margin="32,84,0,0" VerticalAlignment="Top"/>
+        <Label Content="End:" HorizontalAlignment="Left" Margin="32,115,0,0" VerticalAlignment="Top"/>
+        <DatePicker Name="dateTo" HorizontalAlignment="Left" Margin="106,115,0,0" VerticalAlignment="Top" Width="146" Height="26"/>
+        <TextBox Name="logger" HorizontalAlignment="Left" Height="33" Margin="32,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="281"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,346 @@
+﻿<controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        x:Class="AP.SATM.Eyes.Events"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:properties="clr-namespace:AP.SATM.Eyes.Properties"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:ax="clr-namespace:ACTIVEXLib;assembly=Interop.ACTIVEXLib" 
+        xmlns:ocx="clr-namespace:AxACTIVEXLib;assembly=AxInterop.ACTIVEXLib"
+        xmlns:UI="clr-namespace:AP.SATM.Eyes"
+        xmlns:s="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:p="clr-namespace:System;assembly=mscorlib"
+    
+                      Title="Система аналітики руху транспорту" 
+                      Height="600" Width="800" 
+                      Icon="truck.ico" Loaded="MetroWindow_Loaded" 
+                      Closing="mwindow_Closing"
+                      ShowWindowCommandsOnTop="False" WindowState="Maximized" WindowStartupLocation="CenterScreen"
+                      x:Name="mwindow">
+    <!-- MouseMove="MetroWindow_MouseMove"
+                      MouseLeftButtonDown="MetroWindow_MouseLeftButtonDown"
+                      >-->
+
+    <controls:MetroWindow.Resources>
+
+        <ObjectDataProvider MethodName="GetType" 
+                ObjectType="{x:Type p:Type}" x:Key="colorsTypeOdp">
+            <ObjectDataProvider.MethodParameters>
+                <p:String>System.Windows.Media.Colors, PresentationCore,
+            Version=3.0.0.0, Culture=neutral, 
+            PublicKeyToken=31bf3856ad364e35</p:String>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider ObjectInstance="{StaticResource colorsTypeOdp}"  
+             MethodName="GetProperties" x:Key="colorPropertiesOdp">
+        </ObjectDataProvider>
+
+
+
+        <VisualBrush x:Key="Loggedin" Stretch="Fill" Visual="{StaticResource appbar_network_server}" />
+        <VisualBrush x:Key="NotLoggedin" Stretch="Fill" Visual="{StaticResource appbar_network_server_disconnect}" />
+        <UI:EventStyleSelector x:Key="listViewStyle" />
+        <DataTemplate x:Key="ArrowUp">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" 
+        			Text="{Binding}" />
+                <Path VerticalAlignment="Center" 
+        			Fill="Black" 
+        			Data="M 5,5 15,5 10,0 5,5" />
+            </DockPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ArrowDown">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" 
+        			Text="{Binding}" />
+                <Path VerticalAlignment="Center" 
+        			Fill="Black" 
+        			Data="M 5,0 10,5 15,0 5,0" />
+            </DockPanel>
+        </DataTemplate>
+    </controls:MetroWindow.Resources>
+
+    <controls:MetroWindow.LeftWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="Previous_Click">
+                <Image Height="20" Source="Resources/prev.png" />
+                <!--
+                <Rectangle Margin="0,4,0,4" Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_left}"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                -->
+            </Button>
+            <Button Click="Next_Click" >
+                <Image Height="20" Source="Resources/next.png" />
+                <!--
+                <Rectangle Margin="0,4,0,4" Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_right}"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                -->
+            </Button>
+
+        </controls:WindowCommands>
+    </controls:MetroWindow.LeftWindowCommands>
+    <!--appbar_arrow_left-->
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+
+            <Button Click="ObjectsFlayoutClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_list_gear}"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4,0,0,0" Text="об'єкти"/>
+                </StackPanel>
+            </Button>
+            <Button Click="SettingsFlayoutClick" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4,0,0,0" Text="налаштування"/>
+                </StackPanel>
+            </Button>
+
+            <Button Click="SingInClick" x:Name="signin">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Height="20" Width="20" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush>
+                                <!-- x:Name="connectionBrush" Stretch="Fill" ="{StaticResource appbar_network_server}" />-->
+                                <VisualBrush.Visual>
+                                    <Rectangle Width="20" Height="20">
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="Fill" Value="{StaticResource NotLoggedin}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding coreConnected}" Value="True">
+                                                        <Setter Property="Fill" Value="{StaticResource Loggedin}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="6,0,0,4" x:Name="connectionStatus"
+            			VerticalAlignment="Center"
+            			Text="увійти" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout x:Name="objectFlayout" Header="Елеватори" Position="Right" Theme="Adapt" Width="300" IsOpenChanged="cores_IsOpenChanged">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Margin="20,0,0,0" Fill="Black">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_monitor}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Доступні до перегляду об'єкти:" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <TextBlock Text="подвійний клік для перегляду в поточному часі" Margin="40,10,0,0" FontSize="10"/>
+                    <Grid Height="180">
+                        <ListBox x:Name="coresView" Margin="20,10,20,0" 
+            				ScrollViewer.VerticalScrollBarVisibility="Auto" 
+            				SelectionMode="Extended"
+            				MouseDoubleClick="coresView_MouseDoubleClick"
+                                 />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Margin="20,10,0,0" Fill="Black">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_monitor_film}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Доступні до перегляду проїзди:" Margin="10,10,0,0"/>
+                    </StackPanel>
+                    <Grid Height="180">
+                        <ListBox x:Name="entriesView" Margin="20,10,20,0" 
+            				ScrollViewer.VerticalScrollBarVisibility="Auto" 
+            				SelectionMode="Extended"
+            				MouseDoubleClick="coresView_MouseDoubleClick"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock Margin="20,15,0,0" Text="Починаючи з:" />
+                        <DatePicker Margin="10,10,10,0" x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="startDate_SelectedDateChanged"/>
+                        <TextBox x:Name="textStartTime" Margin="0,10,20,0" Text="{Binding startTime, Mode=TwoWay}" TextChanged="textStartTime_TextChanged">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Opacity" Value="0.3" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="20,15,0,0" Text="Закінчуючи:   " />
+                        <DatePicker Margin="10,10,10,0" x:Name="endDate" FirstDayOfWeek="Monday" SelectedDateChanged="endDate_SelectedDateChanged"/>
+                        <TextBox x:Name="textEndTime" Margin="0,10,20,0" Text="{Binding endTime, Mode=TwoWay}" TextChanged="textEndTime_TextChanged">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Opacity" Value="0.3" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
+                    <CheckBox Margin="20,10,20,0" Content="з архіву" x:Name="offlineData">
+                        <CheckBox.Style>
+                            <Style TargetType="{x:Type CheckBox}">
+                                <Setter Property="Opacity" Value="0.5" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+                    <Button Margin="20,10,20,0" Click="RenewEventsClick">
+                        <TextBlock Text="Виконати"/>
+                    </Button>
+                </StackPanel>
+            </controls:Flyout>
+            <controls:Flyout x:Name="settingsFlayout" Header="Налаштування" Position="Right" Theme="Adapt" Width="300" IsOpenChanged="settings_IsOpenChanged">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Margin="20,0,0,0" Width="20" Height="20" Fill="Black">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_key}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Margin="20,0,20,0" Text="Серійний номер сертифікату:"/>
+                    </StackPanel>
+                    <TextBox controls:TextboxHelper.ClearTextButton="True" Margin="20,10,20,0" x:Name="certificate" IsReadOnly="True"
+            			Text="{Binding x509, Mode=TwoWay, Source={x:Static properties:Settings.Default}}" MouseDoubleClick="certificate_MouseDoubleClick"/>
+                    <Label Content="Кольор для непідтвердженого проїзду" HorizontalAlignment="Center" Background="{Binding ElementName=mwindow, Path=IllegalColor}"/>
+                    <ComboBox Name="iColor" 
+                            Margin="20,0,20,0"
+                            ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" 
+	                        SelectedValuePath="Name"  SelectedValue="{Binding ElementName=mwindow, 
+	                        Path=IllegalColor}" SelectionChanged="iColor_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                    <Border BorderThickness="1" CornerRadius="2" 
+                                      BorderBrush="Black" Width="50" VerticalAlignment="Stretch"
+                                      Background="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Name}" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Label Content="Кольор для підтвердженого проїзду" HorizontalAlignment="Center"/>
+                    <ComboBox Name="lColor" 
+                            Margin="20,0,20,0"
+                            ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" 
+	                        SelectedValuePath="Name"  SelectedValue="{Binding ElementName=mwindow, 
+	                        Path=LegalColor}" SelectionChanged="lColor_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                    <Border BorderThickness="1" CornerRadius="2" 
+                                      BorderBrush="Black" Width="50" VerticalAlignment="Stretch"
+                                      Background="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Name}" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Content="Кольор для відпрацьованого проїзду" HorizontalAlignment="Center"/>
+                    <ComboBox Name="pColor" 
+                            Margin="20,0,20,0"
+                            ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" 
+	                        SelectedValuePath="Name"  SelectedValue="{Binding ElementName=mwindow, 
+	                        Path=ProcessedColor}" SelectionChanged="pColor_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                    <Border BorderThickness="1" CornerRadius="2" 
+                                      BorderBrush="Black" Width="50" VerticalAlignment="Stretch"
+                                      Background="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Name}" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="320" Height="320" Source="Resources/truckimage.png" Opacity="0.2"/>
+        <ListView x:Name="eventsView"
+			Visibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+			ScrollViewer.VerticalScrollBarVisibility="Visible" 
+			ItemContainerStyleSelector="{DynamicResource listViewStyle}"
+			SelectionMode="Single"
+			SelectionChanged="listEvents_SelectionChanged"
+			ButtonBase.Click="GridViewColumnHeaderClickedHandler"
+                  
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="   " DisplayMemberBinding="{Binding user}" Width="Auto"/>
+                    <GridViewColumn Header="Елеватор" DisplayMemberBinding="{Binding owner}" Width="Auto"/>
+                    <GridViewColumn Header="Проїзд" DisplayMemberBinding="{Binding entry}" Width="Auto"/>
+                    <GridViewColumn Header="Напрямок" DisplayMemberBinding="{Binding direction}" Width="Auto"/>
+                    <GridViewColumn Header="Початок" DisplayMemberBinding="{Binding startDate}" Width="Auto"/>
+                    <GridViewColumn Header="Кінець" DisplayMemberBinding="{Binding endDate}" Width="Auto"/>
+                    <GridViewColumn Header="№ ТТН" DisplayMemberBinding="{Binding ttn}" Width="Auto"/>
+                    <GridViewColumn Header="№ Авто" DisplayMemberBinding="{Binding carID}" Width="Auto"/>
+                    <GridViewColumn Header="Культура" DisplayMemberBinding="{Binding culture}" Width="Auto"/>
+                    <GridViewColumn Header="Етап БП" DisplayMemberBinding="{Binding who}" Width="Auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <WindowsFormsHost Grid.Column="0" Grid.Row="1" x:Name="hostEnterCam" Visibility="Collapsed">
+            <ocx:AxCamMonitor x:Name="ocxEnter" MouseDownEvent="ocxEnter_MouseDownEvent"
+				OnConnectStateChanged="ocxEnter_OnConnectStateChanged"
+				OnVideoFrame="ocx_OnVideoFrame" SizeChanged="ocxEnter_SizeChanged" OnCamListChange="ocxEnter_OnCamListChange" />
+        </WindowsFormsHost>
+        <WindowsFormsHost Grid.Column="1" Grid.Row="0" x:Name="hostUpCam" Visibility="Collapsed">
+            <ocx:AxCamMonitor x:Name="ocxUp" MouseDownEvent="ocxUp_MouseDownEvent"
+				OnConnectStateChanged="ocxUp_OnConnectStateChanged"
+				OnVideoFrame="ocx_OnVideoFrame" SizeChanged="ocxUp_SizeChanged" OnCamListChange="ocxUp_OnCamListChange" />
+        </WindowsFormsHost>
+        <WindowsFormsHost Grid.Column="1" Grid.Row="1" x:Name="hostExitCam" Visibility="Collapsed">
+            <ocx:AxCamMonitor x:Name="ocxExit" MouseDownEvent="ocxExit_MouseDownEvent"
+				OnConnectStateChanged="ocxExit_OnConnectStateChanged"
+				OnVideoFrame="ocx_OnVideoFrame" SizeChanged="ocxExit_SizeChanged" OnCamListChange="ocxExit_OnCamListChange" />
+        </WindowsFormsHost>
+    </Grid>
+</controls:MetroWindow>

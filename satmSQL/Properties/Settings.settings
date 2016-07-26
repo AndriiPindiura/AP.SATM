@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AP.SATM.Brain.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="sqlCommandTimeout" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="lastProtocolQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT TOP 1 [date] FROM [satm].[dbo].[PROTOCOL] WHERE owner=@owner ORDER by [date] DESC</Value>
+    </Setting>
+    <Setting Name="lastProtocol1cQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT TOP 1 [Date] FROM [satm].[dbo].[satm1C] WHERE owner=@owner ORDER by [Date] DESC</Value>
+    </Setting>
+    <Setting Name="databaseConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=.\SQLEXPRESS;Integrated Security=True;MultipleActiveResultSets=True;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=.\SQLEXPRESS;Integrated Security=True;MultipleActiveResultSets=True;</Value>
+    </Setting>
+    <Setting Name="protocolQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">INSERT [satm].[dbo].[PROTOCOL](objtype,objid,action,date,owner,pk,processed)
+select objtype,objid,action,date,owner,pk,'false' from OPENROWSET
+('SQLOLEDB','Server={@SQLServer};UID={@username};PWD={@password}','SELECT [objtype]
+      ,[objid],[action],[date],[owner],[pk]
+  FROM [{@Database}].[dbo].[ViewProtocol]
+  order by date desc') rdb
+  where NOT EXISTS (select pk FROM [satm].[dbo].[PROTOCOL] ldb where rdb.pk=ldb.pk)</Value>
+    </Setting>
+    <Setting Name="sapQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">INSERT [satm].[dbo].[satm1C] (owner,[1cID],carID,Date,Entry,Culture,WHO,pk)
+select * from OPENROWSET
+('SQLOLEDB','Server={@SQLServer};UID={@username};PWD={@password}','SELECT *
+  FROM [{@Database}].[dbo].[ViewProtocol1C]') rdb
+  where NOT EXISTS (select owner,pk FROM [satm].[dbo].[satm1C] ldb where 
+  (rdb.owner=ldb.owner) and  (rdb.pk=ldb.pk) ) </Value>
+    </Setting>
+    <Setting Name="rotateDataQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DELETE FROM [satm].[dbo].[PROTOCOL]
+      WHERE date&lt;GETDATE()-91
+DELETE FROM [satm].[dbo].[Events]
+	  WHERE startDate&lt;GETDATE()-91</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

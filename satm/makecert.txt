@@ -1,0 +1,8 @@
+ROOT Certificate
+makecert.exe -n "CN=aydnep IT-consulting" -r -sv APRootCA.pvk APRootCA.cer 
+Server Certificate
+makecert.exe -iv APRootCA.pvk -n "CN=AP.SATM.Heart" -ic APRootCA.cer AP.SATM.Heart.cer -sv AP.SATM.Heart.pvk -sky exchange -pe
+pvk2pfx.exe -pvk AP.SATM.Heart.pvk -spc AP.SATM.Heart.cer -pfx AP.SATM.Heart.pfx
+Client Certificate
+makecert.exe -iv APRootCA.pvk -n "CN=Andrii Pindiura" -ic APRootCA.cer aydnep.cer -sr localmachine -ss My -pe
++EXPORT keys
